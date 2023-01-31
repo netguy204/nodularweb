@@ -1,1 +1,1 @@
-start: node src/api/index.js
+start: bin/aprod.sh
