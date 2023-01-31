@@ -1,1 +1,0 @@
-start: bin/aprod.sh
