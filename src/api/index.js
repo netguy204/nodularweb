@@ -5,7 +5,7 @@ const app = express()
 const port = 4000
 
 app.get('/', (req, res) => {
-  res.send({ message: 'Hello, world' })
+  res.send({ message: 'Hello, smokey world' })
 })
 
 app.listen(port, () => console.log(`Example backend API listening on port ${port}!`))
