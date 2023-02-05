@@ -18,7 +18,9 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16
-    - run: npm test
+    - run: |
+        npm install
+        npm test
     - name: Checkout Gitops
       uses: actions/checkout@v2
       with:
