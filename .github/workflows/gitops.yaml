@@ -34,6 +34,6 @@ jobs:
         git config --global user.name "nodularweb gha"
         gitops/scripts/expand.sh `git rev-parse HEAD` gitops/nodularweb/templates/production gitops/nodularweb/overlays/production __REVISION__
         cd gitops
-        git commit -am 'automated version bump'
-        #git remote add gh-token "https://${{ secrets.GITOPS_ACCESS}}@github.com/netguy204/prototype-git-ops.git"
+        git add nodularweb/overlays/production
+        git commit -m 'automated version bump'
         git push origin main
