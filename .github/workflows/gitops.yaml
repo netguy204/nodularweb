@@ -1,0 +1,37 @@
+name: update gitops
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  update-ops:
+    name: test and deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - run: npm test
+    - name: Checkout Gitops
+      uses: actions/checkout@v2
+      with:
+        repository: netguy204/prototype-git-ops
+        path: gitops
+        token: ${{ secrets.GITOPS_ACCESS }}
+    - name: edit gitops for deploy
+      run: |
+        set -ex
+        git config --global user.email "gitops@brianttaylor.com"
+        git config --global user.name "nodularweb gha"
+        gitops/scripts/expand.sh `git rev-parse HEAD` gitops/nodularweb/templates/production gitops/nodularweb/overlays/production __REVISION__
+        cd gitops
+        git commit -am 'automated version bump'
+        #git remote add gh-token "https://${{ secrets.GITOPS_ACCESS}}@github.com/netguy204/prototype-git-ops.git"
+        git push origin main
