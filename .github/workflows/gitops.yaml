@@ -29,11 +29,4 @@ jobs:
         token: ${{ secrets.GITOPS_ACCESS }}
     - name: edit gitops for deploy
       run: |
-        set -ex
-        git config --global user.email "gitops@brianttaylor.com"
-        git config --global user.name "nodularweb gha"
-        gitops/scripts/expand.sh `git rev-parse HEAD` gitops/nodularweb/templates/production gitops/nodularweb/overlays/production __REVISION__
-        cd gitops
-        git add nodularweb/overlays/production
-        git commit -m 'automated version bump'
-        git push origin main
+        gitops/scripts/release.sh nodularweb production
